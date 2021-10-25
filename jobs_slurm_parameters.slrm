@@ -1,0 +1,53 @@
+#!/bin/sh
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --job-name=tensorflow-gpu-array
+#SBATCH --time=1:00:00
+#SBATCH --partition=ibtesla
+#SBATCH --gres=gpu:1
+#SBATCH --export=NONE
+#SBATCH --mem-per-cpu=3200
+#SBATCH --output=array_%A_%a.out
+#SBATCH --error=array_%A_%a.err
+#SBATCH --array=1
+
+# Print the task id.
+echo "My SLURM_ARRAY_TASK_ID: " $SLURM_ARRAY_TASK_ID
+
+#Directorio scratch en disco local
+#SCRATCH_DIR=/scratch/$USER/$SLURM_JOBID
+
+pwd
+module load miniconda/3
+eval "$(conda shell.bash hook)"
+conda activate tf24
+conda info --envs
+module load cuda/11.0 
+export HDF5_USE_FILE_LOCKING='FALSE'
+
+# Orden de argumentos:
+
+#  Augmentation (str) / Dropout (str) / Optimizer (str) / Activation_funcion (str) / ...
+#  Batch_size (int) / Dimension of convolucional layers (int) / ... 
+#  Dimension pooling layers (int) / Number of layers (int), choose between 3 and 5 
+
+#if [ $SLURM_ARRAY_TASK_ID == 1 ]; then
+#    python 6ev_par2.py no yes adam relu 110 3 3 3
+#fi
+
+#if [ $SLURM_ARRAY_TASK_ID == 2 ]; then
+#    python 6ev_par2.py no yes adam relu 40 4 2 3
+#fi
+
+#if [ $SLURM_ARRAY_TASK_ID == 3 ]; then
+#    python 6ev_par2.py no yes SGD relu 40 3 3 3
+#fi
+
+if [ $SLURM_ARRAY_TASK_ID == 1 ]; then
+    python ev2_CNN_VictorMinjares.py no yes adam elu 40 3 3 3
+fi
+
+#if [ $SLURM_ARRAY_TASK_ID == 5 ]; then
+#    python 6ev_par2.py no yes adam elu 40 3 3 3
+#fi
