@@ -18,4 +18,4 @@ Estas imágenes fueron recolectadas por O. Ulucan, D. Karakayay,  M. Turkan del 
 * Trout (Trucha)
 * Shrimp (Camarón)
 
-Para ver mas detalles de las imagenes y las conclusiones ver el pdf: reconocimientoImagenes.pdf
+Para ver más detalles de las imágenes y las conclusiones ver el pdf: reconocimientoImagenes.pdf
